@@ -1,4 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
+using SalePredict.Context;
+using SalePredict.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<SalePredictContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    );
+});
+builder.Services.AddScoped<ForecastService>();
+builder.Services.AddScoped<MLContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
